@@ -12,6 +12,7 @@ portti = pygame.image.load("gate.png")
 dragon = pygame.image.load("dragon.png")
 arrow_left = pygame.image.load("arrow_left.png")
 arrow_right = pygame.image.load("arrow_right.png")
+start_button = pygame.image.load("start_button.png")
 sx, sy = naytto.get_size()
 
 y = sy - princess.get_height()
@@ -56,7 +57,7 @@ class Peli:
         self.black = (0, 0, 0)
 
         pygame.display.set_caption('Väistä hirviötä')
-        self.font = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 28)
+        self.font = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 26)
         self.font_a = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 24)
         self.font_b = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 18)
         self.font_c = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 12)
@@ -72,8 +73,7 @@ class Peli:
         self.piirra_tausta()
         self.piirra_portti()
         self.aloitusikkuna()
-        #txtsurf_a = self.font.render("Aloita peli = välilyönti", True, self.dark_grey)
-        #naytto.blit(txtsurf_a,(160,140))
+        self.aloitusnapin_piirto()
         pygame.display.flip()
 
 
@@ -86,22 +86,31 @@ class Peli:
 
     def silmukka(self):
         game_running = True
-
+        napin_alue = pygame.Rect(360, 230, start_button.get_width(), start_button.get_height())
         while game_running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     game_running = False
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    hiiren_x, hiiren_y = pygame.mouse.get_pos()
+                    if napin_alue.collidepoint(hiiren_x, hiiren_y):
                         # Aloita peli
+                        self.princess_x = sx // 2 - princess.get_width()
+                        self.princess_y = sy - princess.get_height()
      
                         self.tutki_tapahtumat()
 
 
+
+    def aloitusnapin_piirto(self):
+        txtsurf_a = self.font.render("Aloita peli", True, self.dark_grey)
+        naytto.blit(txtsurf_a, (320, 200))
+        self.start_button = start_button
+        naytto.blit(self.start_button, (360, 230))
+
+
     def aloitusikkuna(self):
        
-
-
         # Piirrä läpinäkyvä ikkuna tekstin alle
         ikkunan_koko = (sx - 40, sy - 40)
         ikkuna = pygame.Surface(ikkunan_koko, pygame.SRCALPHA)
@@ -144,7 +153,9 @@ class Peli:
 
     def tutki_tapahtumat(self):
         while True:
+
             for tapahtuma in pygame.event.get():
+
                 if tapahtuma.type == pygame.KEYDOWN:
                     if tapahtuma.key == pygame.K_LEFT:
                         self.suunta = 2
