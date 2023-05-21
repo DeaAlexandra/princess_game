@@ -59,6 +59,7 @@ class Peli:
         self.font = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 28)
         self.font_a = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 24)
         self.font_b = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 18)
+        self.font_c = pygame.font.Font('bradley_hand_itc_tt_bold.ttf', 12)
         self.help = False
         self.suunta = 0
         self.princess_x = 100
@@ -129,7 +130,8 @@ class Peli:
         naytto.blit(txtsurf_b, (60, 360))
         txtsurf_b = self.font_a.render("mutta varo lohikäärmeitä.", True, self.dark_grey)
         naytto.blit(txtsurf_b, (60, 390))
-        
+        txtsurf_c = self.font_c.render("Images by brgfx on Freepik", True, self.dark_grey)
+        naytto.blit(txtsurf_c, (60, 440))       
 
 
 
