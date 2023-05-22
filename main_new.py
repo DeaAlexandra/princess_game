@@ -31,15 +31,18 @@ class Dragon:
     def game_over(self):
         if Dragon.osui != True:
             self.y += self.v
-    def osuma(self,princess_x,princess_y):
-        if self.y > sy - princess.get_height() - dragon.get_height():
-            if princess_x + princess.get_width() < self.x or princess_x  > self.x + 40:
+    def osuma(self, princess_x, princess_y):
+        if self.y > sy - princess.get_height() - dragon.get_height() + 10:
+            if princess_x + princess.get_width() < self.x or princess_x > self.x + dragon.get_width():
                 pass
             else:
                 Dragon.osui = True
+
+
+
     def nollaa(self):
         self.x = random.randrange(portti.get_width(), sx - portti.get_width())
-        self.y = -(random.randrange(20, 480 - dragon.get_height()))
+        self.y = -(random.randrange(20, sy - dragon.get_height()))
         self.v = random.randrange(1, 5)
 
 
@@ -77,14 +80,15 @@ class Peli:
         pygame.display.flip()
 
 
-        self.dragonlista = []
-        for i in range(1,random.randrange(5,10)):
-            self.dragonlista.append(Dragon())
+
 
         self.silmukka()
 
 
     def silmukka(self):
+        self.dragonlista = []
+        for i in range(1,random.randrange(5,10)):
+            self.dragonlista.append(Dragon())
         game_running = True
         napin_alue = pygame.Rect(360, 230, start_button.get_width(), start_button.get_height())
         while game_running:
